@@ -1,0 +1,120 @@
+.chat-box {
+    width: 4.8rem;
+    height: 5.5rem;
+    overflow-y: scroll;
+    padding-left: .03rem;
+    padding-right: 1.08rem;
+    background-color: rgb(245, 245, 245);
+}
+
+.word-box {
+    margin-top: .05rem; 
+}
+
+.right-box {
+    text-align: end;
+}
+
+.left-box {
+    .user-say {
+        background-color: #fff;
+        &::after {
+            background-color: #fff;
+            left: -.03rem;
+        }
+    }
+}
+
+.user-avatar {
+    width: .4rem;
+    height: .4rem;
+    display: inline-block;
+    vertical-align: top;
+    background-color: azure;
+}
+
+.user-say {
+    display: inline-block;
+    position: relative;
+    margin-left: .03rem;
+    margin-right: .03rem;
+    vertical-align: top;
+    padding: .1rem;
+    padding-top: .07rem;
+    word-break: break-all;
+    text-align: start;
+    font-size: .12rem;
+    white-space: normal;
+    max-width: 2rem;
+    background-color: rgb(152,225,101);
+    border-radius: .04rem;
+
+    &::after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        transform: rotate(45deg);
+        top: .14rem;
+        right: -.03rem;
+        width: .08rem;
+        height: .08rem;
+        background-color: rgb(152,225,101);
+    }
+}
+
+.chat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .2rem;
+    color: #fff;
+    background-color: rgba(0,0,0, 0.8);
+    width: 3.75rem;
+    height: .5rem;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.chat-top-back {
+    position: relative;
+    left: .2rem;
+}
+
+.chat-top-more {
+    position: relative;
+    right: .2rem;
+    top: -.03rem;
+}
+
+.chat-send {
+    //width: .4rem;
+    margin-bottom: 4px;
+}
+
+.chat-form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.chat-text {
+    width: 3rem;
+}
+
+.chat-text-input {
+    width: 3rem;
+    margin-bottom: 0;
+}
+
+.chat-box-wrapper {
+    width: 100%;
+    height: 5.5rem;
+    overflow: hidden;
+}
+
+#chat-mess-observer {
+    width: .1rem;
+    height: .1rem;
+}

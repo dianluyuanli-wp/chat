@@ -1,0 +1,54 @@
+.friendList-wrapper {
+    width: 3.75rem;
+}
+
+.fri-list-name {
+    font-size: .2rem;
+    border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.friend-item {
+    border-bottom: 1px solid rgb(224, 224, 224);
+    height: .6rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.friend-icon {
+    width: .4rem;
+    height: .4rem;
+    margin-left: .1rem;
+    background-color: rgb(152,225,101);
+    position: relative;
+}
+
+.friend-mes-info {
+    position: absolute;
+    top: -0.055rem;
+    right: -0.055rem;
+    min-width: .15rem;
+    padding-left: .02rem;
+    padding-right: .02rem;
+    //width: .15rem;
+    height: .15rem;
+    border-radius: .075rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#fff;
+    background-color: rgb(255, 59, 48);
+}
+
+.friend-name {
+    font-size: .16rem;
+    color: #000;
+}
+
+.friend-content {
+    margin-left: .15rem;
+}
+
+.fri-say {
+    color: rgb(153, 153, 153);
+}

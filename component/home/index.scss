@@ -1,0 +1,21 @@
+.bottom-tab {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 3.75rem;
+    height: .45rem;
+    background-color: #fafafa;
+}
+
+.bottom-item {
+    text-align: center;
+    height: .2rem;
+    line-height: .2rem;
+}
+
+.item-focus {
+    color: rgb(152,225,101);
+    text-decoration: underline;
+}
