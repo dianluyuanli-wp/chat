@@ -110,7 +110,8 @@ module.exports = {
         alias: {
             '@apiMap': path.resolve(__dirname, 'map/api'),
             '@constants': path.resolve(__dirname, 'constants'),
-            '@tools': path.resolve(__dirname, 'tools')
+            '@tools': path.resolve(__dirname, 'tools'),
+            '@UI': path.resolve(__dirname, 'UIwidgets')
         }
     },
     // externals: {

@@ -5,6 +5,8 @@
     padding-left: .03rem;
     padding-right: 1.08rem;
     background-color: rgb(245, 245, 245);
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .word-box {
@@ -71,10 +73,10 @@
     background-color: rgba(0,0,0, 0.8);
     width: 3.75rem;
     height: .5rem;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
+    // position: fixed;
+    // z-index: 1;
+    // top: 0;
+    // left: 0;
 }
 
 .chat-top-back {
@@ -115,6 +117,7 @@
 }
 
 #chat-mess-observer {
-    width: .1rem;
-    height: .1rem;
+    //width: 1rem;
+    height: 1rem;
+    color: transparent;
 }

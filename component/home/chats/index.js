@@ -2,12 +2,13 @@ import React from 'react';
 import { Input, Form, Button } from 'antd';
 import io from 'socket.io-client';
 import { inject, observer } from 'mobx-react';
-import { toJS, runInAction, action, autorun } from 'mobx';
+import { toJS, runInAction, action, autorun, observable } from 'mobx';
 import './index.scss';
 import { netModel } from 'xiaohuli-package';
 import BaseCom from '../../baseStructure/baseCom';
 import apiMap from '@apiMap';
 import { getBothOwner, isFirst } from '@tools';
+import Loading from '@UI/loading';
 import { PAGE_NAME } from '@constants';
 
 const { TextArea } = Input;
@@ -15,37 +16,58 @@ const { TextArea } = Input;
 @inject('chatStore')
 @observer
 class HomePage extends BaseCom {
+    messageList = this.getChatList(this.store.toUserId);
+    @observable scrollLock = false;
     componentDidMount = async () => {
         this.updateMesRank();
         this.box = document.getElementsByClassName('chat-box')[0];
         this.boxScroll();
         autorun(() => {
-            const b = this.getChatList(this.store.toUserId)[0].message;
-            if (b.length > 0) {
-                setTimeout(this.boxScroll, 0);
-            } 
+            const b = this.messageList[0]?.message || [];
+            if (b.length > 0 && !this.scrollLock) {
+                setTimeout(this.boxScroll, 0);  //  保证输入新内容的时候会拉到最底
+            }
         })
 
-        let obsInter = new IntersectionObserver((item) => {
-            console.log('visibility change');
+        let obsInter = new IntersectionObserver(async (item) => {
+            if (item[0].intersectionRatio <= 0) {
+                return;
+            }
+            const messObj = this.messageList[0] || '';
+            let reqLength = 15;
+            if (messObj && messObj.message.length > 0) {
+                const { user1_flag, user2_flag, message } = messObj;
+                const diff = Math.max(user1_flag, user2_flag) - message.length;
+                if (diff <= 0) {
+                    return ;
+                }
+                reqLength = diff > 15 ? 15 : diff;
+            } else {
+                return ;
+            }
+            this.scrollLock = true;
+            const ans = await netModel.get(apiMap.get('getMoreMessage'), {
+                currentLength: this.messageList[0].message.length,
+                toFriend: this.store.toUserId,
+                length: reqLength
+            }, {});
+            runInAction(() => {
+                this.messageList[0].message = ans.message.concat(toJS(this.messageList[0].message));
+            })
+            this.scrollLock = false;
         })
-
         obsInter.observe(document.getElementById('chat-mess-observer'));
     }
-    messageList = this.getChatList(this.store.toUserId);
+
     //  滚动条置底
     boxScroll = () => {
-        //
-        this.box.scrollTo(0, this.box.scrollHeight);
+        !this.lockScroll && this.box.scrollTo(0, this.box.scrollHeight);
     }
 
     //  发送消息
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
-        //   if (!err) {
-        //     console.log(values, 'value');
-        //   }
             if (!values.message) {
                 return ;
             }
@@ -68,7 +90,7 @@ class HomePage extends BaseCom {
         } else {
             renderList = [];
         }
-        const returnList = renderList.map((item, index) => {
+        const returnList = renderList.reverse().map((item, index) => {
             const isOwner = this.store.userName === item.owner;
             const avatar = <div className={'user-avatar'}>{item.owner}</div>;
             const content = <div className={'user-say'}>{item.content}</div>;
@@ -78,7 +100,9 @@ class HomePage extends BaseCom {
                 </div>
             )
         });
-        returnList.unshift(<div key={'0_0'} id='chat-mess-observer'></div>);
+        returnList.push(<div key={'0_0'} id='chat-mess-observer'>
+            {this.scrollLock ? Loading() : '1'}
+        </div>);
         return returnList;
     }
     @action

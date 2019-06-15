@@ -37,6 +37,10 @@ class Api {
             getAllMessage: {
                 api: apiDomain + 'getAllMessage'
                 //  获取首页好友的消息
+            },
+            getMoreMessage: {
+                api: apiDomain + 'getMoreMessage'
+                //  向上加载更多聊天记录
             }
         }
         return hostObject[name] && hostObject[name].api;

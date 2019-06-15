@@ -19,7 +19,7 @@ const renderFunction = async() => {
     const mountNode = document.getElementById('main');
     loginVerify();
     const userInfo = await netModel.get(apiMap.get('userInfo'),{}, {});
-    const message = await netModel.get(apiMap.get('getAllMessage'), {}, {});
+    let message = await netModel.get(apiMap.get('getAllMessage'), {}, {});
     userInfo.message = message;
     ReactDom.render((
         <Wrapper userInfo={userInfo}/>

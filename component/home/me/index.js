@@ -10,10 +10,29 @@ import apiMap from '@apiMap';
 @inject('chatStore')
 @observer
 class Me extends BaseCom {
+    state = {
+        content: ['2']
+    }
+
     render () {
         return (
-            <div onClick={() => {console.log(toJS(this.store))}}>点一点</div>
-        )
+            <div className='me-wrapper'>
+                <div onClick={() => {console.log(toJS(this.store))}}>点一点</div>
+                <div onClick={
+                    () => {
+                        const a = this.state.content.concat(['1'])
+                        this.setState({content: a})}
+                    }>添加
+                </div>
+                <div className='me-wrapper'>
+                    {this.state.content.map((item, index) => {
+                        return (<div key={index}>
+                            {item}
+                        </div>)
+                    })}
+                </div>
+            </div>
+        );
     }
 }
 
