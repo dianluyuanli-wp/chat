@@ -3,7 +3,7 @@ class Api {
         this.apiDomain = '';
     }
     get(name) {
-        const apiDomain = 'http://localhost:3000/api/';
+        const apiDomain = process.env.NODE_ENV === 'production' ? 'http://149.129.83.246/api/' : 'http://localhost:3000/api/';
         //const apiDomain = 'http://149.129.83.246/api/';
         const hostObject = {
             animal: {

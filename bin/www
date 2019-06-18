@@ -36,8 +36,6 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-
-
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -49,32 +47,6 @@ server.on('listening', onListening);
 /**
  * Normalize a port into a number, string, or false.
  */
-
-//  // socket.io 相关配置
-// var io = require('socket.io')(server);
-// let userMap = {};
-
-// io.on('connection', function(socket){
-//   console.log('a user connected');
-//   //监听客户端的消息
-
-//   socket.on('chat message', function(toUser, owner, msg){
-//   	//用于将消息发送给每个人，包括发送者
-//     //io.emit('chat message', msg);
-
-//     //  一对一传输
-//     let targetId = userMap[toUser];
-//     io.to(`${targetId}`).emit('chat message', {owner: owner, message: msg});
-//   });
-
-//   socket.on('register', function(userID) {
-//     userMap[userID] = socket.id;
-//     console.log(userMap, 'register success!');
-//   })
-//   socket.on('disconnect', function(){
-//     console.log('user disconnected');
-//   });
-// });
 
 function normalizePort(val) {
   var port = parseInt(val, 10);

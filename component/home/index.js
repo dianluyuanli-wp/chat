@@ -19,7 +19,10 @@ import { PAGE_NAME } from '@constants';
 class HomePage extends BaseCom {
     componentDidMount() {
         runInAction(() => {
-            this.store.socketIoObj = io('http://localhost:3000');
+            const socketUrl = process.env.NODE_ENV === 'production' ? 'http://149.129.83.246' : 'http://localhost:3000';
+            this.store.socketIoObj = io(socketUrl, {
+                path: '/mySocket'
+            });
         })
 
         //  接受消息监听
