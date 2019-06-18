@@ -4,9 +4,8 @@ import Wrapper from './wrapper';
 import { netModel, parseCookie } from 'xiaohuli-package';
 import apiMap from '@apiMap';
 
-const loginVerify = async () => {
+const loginVerify = async (currentRoute) => {
     const {userName, password} = parseCookie();
-    const currentRoute = /(?<=\/).*(?=.html)/g.exec(window.location.pathname)[0];
     const res = await netModel.post(apiMap.get('chatVerify'), {
         userName: userName,
         passWord: password
@@ -17,10 +16,14 @@ const loginVerify = async () => {
 }
 const renderFunction = async() => {
     const mountNode = document.getElementById('main');
-    loginVerify();
+    const currentRoute = /(?<=\/).*(?=.html)/g.exec(window.location.pathname)[0];
+    loginVerify(currentRoute);
     const userInfo = await netModel.get(apiMap.get('userInfo'),{}, {});
-    let message = await netModel.get(apiMap.get('getAllMessage'), {}, {});
-    userInfo.message = message;
+    //  不是主页的话没必要请求聊天记录
+    if (currentRoute === 'home') {
+        let message = await netModel.get(apiMap.get('getAllMessage'), {}, {});
+        userInfo.message = message;
+    }
     ReactDom.render((
         <Wrapper userInfo={userInfo}/>
     ),mountNode);
