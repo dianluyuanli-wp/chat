@@ -10,7 +10,7 @@ const loginVerify = async (currentRoute) => {
         userName: userName,
         passWord: password
     },{});
-    if (res !== 'verified' && currentRoute !== 'login') {
+    if (res !== 'verified' && currentRoute === 'home') {
         window.location.href='/login.html'
     }  
 }
