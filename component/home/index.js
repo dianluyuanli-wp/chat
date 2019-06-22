@@ -19,7 +19,8 @@ import { PAGE_NAME } from '@constants';
 class HomePage extends BaseCom {
     componentDidMount() {
         runInAction(() => {
-            const socketUrl = process.env.NODE_ENV === 'production' ? 'http://149.129.83.246' : 'http://localhost:3000';
+            const socketUrl = (process.env.NODE_ENV === 'production' || apiFromLocal.PLACE === 'remote') ? 'http://149.129.83.246' : 'http://localhost:3000';
+            //const socketUrl = 'http://149.129.83.246';
             this.store.socketIoObj = io(socketUrl, {
                 path: '/mySocket'
             });

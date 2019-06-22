@@ -8,7 +8,7 @@ var app = require('../app');
 var debug = require('debug')('chat:server');
 var http = require('http');
 
-if (process.argv[2] === 'wat') {
+if (process.argv.includes('wat')) {
   var webpack = require('webpack');
   var webpackConfig = require('../webpack.config');
   var compiler = webpack(webpackConfig);

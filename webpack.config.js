@@ -5,6 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 //const uglify_es = require('uglify-es');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //webpack4 替代extract-text-webpack-plugin，将css单独提取打包
+import { useRemoteApi } from './constants/webpackConst';
 
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -46,7 +47,12 @@ module.exports = {
         new MiniCssExtractPlugin({      //对css进行打包，webpack4推荐语法
             filename: "[name].css",
             chunkFilename: "[name].css"
-        })
+        }),
+        new webpack.DefinePlugin({
+            'apiFromLocal': {
+                PLACE: JSON.stringify(useRemoteApi ? 'remote' : 'local'),
+            },
+         }),
     ],
     module: {
         rules: [
@@ -79,7 +85,7 @@ module.exports = {
                                 //'transform-decorators-legacy', //在这两个是为了支持es7的装饰器语法，如@observe等
                                 ["@babel/plugin-proposal-decorators", { "legacy": true }],
                                 '@babel/plugin-proposal-optional-chaining',
-                                'transform-class-properties'
+                                ['@babel/plugin-proposal-class-properties', { "loose": true }]
                             ]
                         },
                     }
