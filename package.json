@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "babel-node ./bin/www",
-    "build": "babel-node ./bundle"
+    "build": "babel-node ./bundle",
+    "cBuild": "webpack --color --config webpack.pro.config.js"
   },
   "dependencies": {
     "@babel/preset-react": "^7.0.0",

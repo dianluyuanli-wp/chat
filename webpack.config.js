@@ -52,7 +52,7 @@ module.exports = {
             'apiFromLocal': {
                 PLACE: JSON.stringify(useRemoteApi ? 'remote' : 'local'),
             },
-         }),
+         })
     ],
     module: {
         rules: [
