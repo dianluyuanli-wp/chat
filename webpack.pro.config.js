@@ -1,6 +1,9 @@
 const baseWebpackConfig = require( './webpack.config');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
+import { useAnalyzer } from './constants/webpackConst';
+
 module.exports = {
     ...baseWebpackConfig,
     plugins: [
@@ -11,6 +14,9 @@ module.exports = {
             cssProcessorOptions: { safe: true, discardComments: { removeAll: true } }, //传递给cssProcessor的选项，默认为{}
             canPrint: true                    //一个布尔值，指示插件是否可以将消息打印到控制台，默认为true
         }),
+        ...(useAnalyzer ? [new BundleAnalyzerPlugin({
+            analyzerPort: 8899
+        })] : []),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production'),
