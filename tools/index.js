@@ -13,6 +13,16 @@ export function lookbehindAssertion(content, target) {
     }
     return '';
 }
+export function getBgUrl(url) {
+    if (!url) {
+        return '';
+    }
+    return 'url(' + url + ')';
+}
+
+export function combineCss(...arg) {
+    return arg.map(item => `${item}`).join(' ');
+}
 
 export {getBothOwner};
 export {isFirst};

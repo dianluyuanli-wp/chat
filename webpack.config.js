@@ -92,21 +92,30 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(css|scss)$/,
+                test: /\.(scss)$/,
                 use: [
                     MiniCssExtractPlugin.loader,  //自动提取出css
-                    //'style-loader', // 不屏蔽的话会报错
                     'css-loader', 
-                    'sass-loader',
+                    'sass-loader'
                 ]
             },
             {
-                test: /\.less?$/,
+                //  专门处理antd的css样式
+                test: /\.css$/,
+                include: /node_modules/,
                 use: [
-                    MiniCssExtractPlugin.loader,  //自动提取出css
-                    'style-loader', // 不屏蔽的话会报错
-                    'css-loader', 
-                    'less-loader',
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ],
+            },
+            {
+                //  正常的css使用css module
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    //'css-loader',
+                    'css-loader?modules&localIdentName=[name]__[local]--[hash:base64:5]'
                 ]
             }
         ]
@@ -120,11 +129,6 @@ module.exports = {
             '@UI': path.resolve(__dirname, 'UIwidgets')
         }
     },
-    // externals: {
-    //     'react': 'React',
-    //     'react-dom': 'ReactDOM'
-    // }
-    //mode:"production",
     devtool: 'inline-source-map',
     mode:"development"
 

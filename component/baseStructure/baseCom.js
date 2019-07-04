@@ -7,8 +7,8 @@ class BaseCom extends React.Component {
         return this.props.chatStore;
     }
 
-    @action.bound changeInput = (props, event) => {
-        this.store[props] = event.target.value;
+    @action.bound changeInput = (obj, props, event) => {
+        obj[props] = event.target.value;
     }
 
     @action.bound initMessage = (sender, receiver, content) => {
@@ -65,6 +65,15 @@ class BaseCom extends React.Component {
             } else {
                 target[0].user2_flag = up;
             }
+        }
+    }
+
+    //  获取用户头像
+    getAvatar = (userName = this.store.userName) => {
+        if (userName === this.store.userName) {
+            return this.store.avatar;
+        } else {
+            return this.store.friendsList.filter(item => item.userName === userName)[0].avatar || '';
         }
     }
 }

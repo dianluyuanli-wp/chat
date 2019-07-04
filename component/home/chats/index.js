@@ -7,7 +7,7 @@ import './index.scss';
 import { netModel } from 'xiaohuli-package';
 import BaseCom from '../../baseStructure/baseCom';
 import apiMap from '@apiMap';
-import { getBothOwner, isFirst } from '@tools';
+import { getBothOwner, isFirst, getBgUrl } from '@tools';
 import Loading from '@UI/loading';
 import { PAGE_NAME } from '@constants';
 
@@ -24,7 +24,7 @@ class HomePage extends BaseCom {
         this.boxScroll();
         autorun(() => {
             const b = this.messageList[0]?.message || [];
-            if (b.length > 0 && !this.scrollLock) {
+            if (b.length > 0) {
                 setTimeout(this.boxScroll, 0);  //  保证输入新内容的时候会拉到最底
             }
         })
@@ -54,14 +54,14 @@ class HomePage extends BaseCom {
             runInAction(() => {
                 this.messageList[0].message = ans.message.concat(toJS(this.messageList[0].message));
             })
-            this.scrollLock = false;
+            setTimeout(() => {this.scrollLock = false}, 0);
         })
         obsInter.observe(document.getElementById('chat-mess-observer'));
     }
 
     //  滚动条置底
     boxScroll = () => {
-        !this.lockScroll && this.box.scrollTo(0, this.box.scrollHeight);
+        !this.scrollLock && this.box.scrollTo(0, this.box.scrollHeight);
     }
 
     //  发送消息
@@ -92,7 +92,8 @@ class HomePage extends BaseCom {
         }
         const returnList = renderList.reverse().map((item, index) => {
             const isOwner = this.store.userName === item.owner;
-            const avatar = <div className={'user-avatar'}>{item.owner}</div>;
+            const avatar = <div className={'user-avatar'} style={{backgroundImage: getBgUrl(this.getAvatar(item.owner)) }} 
+                />;
             const content = <div className={'user-say'}>{item.content}</div>;
             return (
                 <div key={index} className={'word-box ' + (isOwner ? 'right-box' : 'left-box')}>

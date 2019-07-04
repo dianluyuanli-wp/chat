@@ -11,6 +11,7 @@
     "antd": "^3.18.1",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
+    "cropperjs": "^1.5.1",
     "debug": "~2.6.9",
     "ejs": "^2.6.1",
     "express": "~4.16.1",

@@ -6,7 +6,7 @@ import './index.scss';
 import { netModel } from 'xiaohuli-package';
 import BaseCom from '../../baseStructure/baseCom';
 import apiMap from '@apiMap';
-import { getBothOwner, isFirst } from '@tools';
+import { getBothOwner, isFirst, getBgUrl } from '@tools';
 import { PAGE_NAME } from '@constants';
 
 @inject('chatStore')
@@ -19,7 +19,7 @@ class Friend extends BaseCom {
     }
     getFriend = () => {
         return this.store.friendsList.map((item, index) => {
-            const messageList = this.store.message.filter(target => target.bothOwner.includes(item));
+            const messageList = this.store.message.filter(target => target.bothOwner.includes(item.userName));
             let message = '';
             let popUp = 0;
             if (messageList.length > 0) {
@@ -30,12 +30,12 @@ class Friend extends BaseCom {
                 message = chatHistory[chatHistory.length - 1].content;
             }
             return (
-                <div className={'friend-item'} key={index} onClick={this.entryTalk.bind(this, item)}>
-                    <div className={'friend-icon'}>
+                <div className={'friend-item'} key={index} onClick={this.entryTalk.bind(this, item.userName)}>
+                    <div className={'friend-icon'} style={{ backgroundImage: getBgUrl(this.getAvatar(item.userName))}}>
                         {popUp > 0 && <div className={'friend-mes-info'}>{popUp}</div>}
                     </div>
                     <div className={'friend-content'}>
-                        <div className={'friend-name'}>{item}</div>
+                        <div className={'friend-name'}>{item.userName}</div>
                         <div className={'fri-say'}>{message}</div>
                     </div>
                 </div>

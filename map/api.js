@@ -41,6 +41,10 @@ class Api {
             getMoreMessage: {
                 api: apiDomain + 'getMoreMessage'
                 //  向上加载更多聊天记录
+            },
+            updateUserInfo: {
+                api: apiDomain + 'updateUserInfo'
+                //  用户数据更新
             }
         }
         return hostObject[name] && hostObject[name].api;
