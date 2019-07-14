@@ -17,6 +17,17 @@
     line-height: .2rem;
 }
 
+.new-friend-req {
+    &::after {
+        content: '';
+        width: .06rem;
+        height: .06rem;
+        border-radius: .03rem;
+        background-color: red;
+        position: absolute;
+    }
+}
+
 .item-focus {
     color: rgb(152,225,101);
     text-decoration: underline;

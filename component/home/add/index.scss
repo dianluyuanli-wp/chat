@@ -1,14 +1,22 @@
 .add-container {
-    width: 3.5rem;
-    padding: .1rem;
-    margin: 0 auto;
+    height: 100%;
+    background-color: rgb(240, 239, 245);
 }
 
 .search-person {
-    width: 3rem;
     margin: 0 auto;
     margin-top: .05rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative
+}
+
+.add-button {
+    position: absolute;
+    bottom: .22rem;
+    right: .15rem;
+}
+
+.delete-friReq {
+    position: absolute;
+    bottom: .22rem;
+    right: 1rem;
 }

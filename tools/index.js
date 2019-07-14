@@ -1,3 +1,6 @@
+import { netModel, parseCookie } from 'xiaohuli-package';
+import apiMap from '@apiMap';
+
 const getBothOwner = (item1, item2) => {
     return [item1, item2].sort((a, b) => a > b).join('@');
 }
@@ -20,9 +23,17 @@ export function getBgUrl(url) {
     return 'url(' + url + ')';
 }
 
+export const wrapedReq = {
+    get: (string, props, opt) => netModel.get(apiMap.get(string), Object.assign(props, { userName: window.chatUserName}, opt)),
+    post: (string, props, opt) => netModel.post(apiMap.get(string), Object.assign(props, { userName: window.chatUserName}, opt)),
+}
+
+const userInList = (array, item) => array.findIndex(sitem => sitem.userName === item.userName) !== -1;
+
 export function combineCss(...arg) {
     return arg.map(item => `${item}`).join(' ');
 }
 
 export {getBothOwner};
 export {isFirst};
+export {userInList};

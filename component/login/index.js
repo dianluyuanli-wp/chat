@@ -5,17 +5,6 @@ import apiMap from '@apiMap';
 import { netModel, writeCookie, parseCookie } from 'xiaohuli-package';
 import './index.scss';
 
-const formItemLayout = {
-    labelCol: {
-        sm: { span: 6 },
-        xs: {span: 6}
-    },
-    wrapperCol: {
-        sm: { span: 12 },
-        xs: { span: 12 }
-    },
-};
-
 const FormItem = Form.Item;
 @observer
 class Login extends React.Component {
@@ -24,7 +13,6 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
           if (!err) {
-            console.log('Received values of form: ', values);
             const res = await netModel.post(apiMap.get('chatVerify'), {
                 userName: values.userName,
                 passWord: values.password
@@ -35,7 +23,6 @@ class Login extends React.Component {
             } else {
                 message.error('账号密码错误')
             }
-            //console.log(res, 'answer');
           }
         });
     }

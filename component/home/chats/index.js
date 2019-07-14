@@ -1,15 +1,13 @@
 import React from 'react';
 import { Input, Form, Button } from 'antd';
-import io from 'socket.io-client';
 import { inject, observer } from 'mobx-react';
 import { toJS, runInAction, action, autorun, observable } from 'mobx';
 import './index.scss';
-import { netModel } from 'xiaohuli-package';
 import BaseCom from '../../baseStructure/baseCom';
-import apiMap from '@apiMap';
-import { getBothOwner, isFirst, getBgUrl } from '@tools';
+import { getBothOwner, isFirst, getBgUrl, wrapedReq } from '@tools';
 import Loading from '@UI/loading';
-import { PAGE_NAME } from '@constants';
+import { Header } from '@UI';
+import { FRIENDS, FRIENDINFO } from '@constants';
 
 const { TextArea } = Input;
 
@@ -46,7 +44,7 @@ class HomePage extends BaseCom {
                 return ;
             }
             this.scrollLock = true;
-            const ans = await netModel.get(apiMap.get('getMoreMessage'), {
+            const ans = await wrapedReq.get('getMoreMessage', {
                 currentLength: this.messageList[0].message.length,
                 toFriend: this.store.toUserId,
                 length: reqLength
@@ -80,6 +78,7 @@ class HomePage extends BaseCom {
             }
             this.rankMark('sender', this.store.toUserId);
             this.store.socketIoObj.emit('chat message', this.store.toUserId, this.store.userName, values.message);
+            //  重新校验一次
             this.props.form.resetFields();
         });
     }
@@ -106,19 +105,14 @@ class HomePage extends BaseCom {
         </div>);
         return returnList;
     }
-    @action
-    backToHome = () => {
-        this.store.pageKey = PAGE_NAME.FRIENDS;
-    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
             <div>
-                <div className={'chat-top'}>
-                    <div className={'chat-top-back'} onClick={this.backToHome}>{'<'}</div>
-                    <div className={'chat-top-friend'} onClick={() => {console.log(toJS(this.store))}}>{this.store.toUserId}</div>
-                    <div className={'chat-top-more'}>. . .</div>
-                </div>
+                <Header midContent={this.getFriendInfo(this.store.toUserId).nickName || this.store.toUserId} back={this.changePage.bind(this, FRIENDS)}>
+                    <div className={'chat-top-more'} onClick={this.changePage.bind(this, FRIENDINFO)}>. . .</div>
+                </Header>
                 <div className={'chat-box-wrapper'}>
                     <div className={'chat-box'}>{this.getMessage()}</div>
                 </div>

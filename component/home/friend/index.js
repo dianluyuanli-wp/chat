@@ -3,18 +3,17 @@ import { Input, Form, Button, message } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { toJS, runInAction, action } from 'mobx';
 import './index.scss';
-import { netModel } from 'xiaohuli-package';
 import BaseCom from '../../baseStructure/baseCom';
-import apiMap from '@apiMap';
 import { getBothOwner, isFirst, getBgUrl } from '@tools';
-import { PAGE_NAME } from '@constants';
+import { CHAT } from '@constants';
+import { Header } from '@UI';
 
 @inject('chatStore')
 @observer
 class Friend extends BaseCom {
     @action
     entryTalk = (item) => {
-        this.store.pageKey = PAGE_NAME.TALK;
+        this.store.pageKey = CHAT;
         this.store.toUserId = item;
     }
     getFriend = () => {
@@ -35,7 +34,7 @@ class Friend extends BaseCom {
                         {popUp > 0 && <div className={'friend-mes-info'}>{popUp}</div>}
                     </div>
                     <div className={'friend-content'}>
-                        <div className={'friend-name'}>{item.userName}</div>
+                        <div className={'friend-name'}>{item.nickName}</div>
                         <div className={'fri-say'}>{message}</div>
                     </div>
                 </div>
@@ -45,6 +44,7 @@ class Friend extends BaseCom {
     render() {
         return (
             <div className={'friendList-wrapper'}>
+                <Header noBack={true} midContent={'IChat'}/>
                 <div className={'fri-list-name'}>好友列表</div>
                 <div>{this.getFriend()}</div>
             </div>

@@ -24,7 +24,6 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
           if (!err) {
-            console.log('Received values of form: ', values);
             if (values.password !== values.repassword) {
                 message.error('两次密码输入不一致');
                 return;
@@ -39,7 +38,6 @@ class Login extends React.Component {
             } else {
                 message.error('用户名已被占用')
             }
-            //console.log(res, 'answer');
           }
         });
     }

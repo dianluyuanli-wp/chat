@@ -24,6 +24,11 @@ class BaseCom extends React.Component {
         })
     }
 
+    @action
+    changePage = (value) => {
+        this.store.pageKey = value;
+    }
+
     createMessage = (owner, content) => ({
         content,
         owner,
@@ -68,6 +73,8 @@ class BaseCom extends React.Component {
         }
     }
 
+    getFriendInfo = (name) => this.store.friendsList.filter(item => item.userName === name)[0] || {};
+
     //  获取用户头像
     getAvatar = (userName = this.store.userName) => {
         if (userName === this.store.userName) {
@@ -76,6 +83,13 @@ class BaseCom extends React.Component {
             return this.store.friendsList.filter(item => item.userName === userName)[0].avatar || '';
         }
     }
+
+    //  获取自己的信息Obj
+    getMyInfoObj = () => ({
+        userName: this.store.userName,
+        nickName: this.store.nickName,
+        avatar: this.store.avatar
+    })
 }
 
 export default BaseCom;

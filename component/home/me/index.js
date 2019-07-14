@@ -3,11 +3,11 @@ import { Input, Form, Button, message } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { toJS, runInAction, observable, action } from 'mobx';
 import s from './index.css';
-import { netModel } from 'xiaohuli-package';
 import Avatar from './upload';
-import { getBgUrl, combineCss } from '@tools';
+import { getBgUrl, combineCss, wrapedReq } from '@tools';
+import { writeCookie } from 'xiaohuli-package';
 import BaseCom from '../../baseStructure/baseCom';
-import apiMap from '@apiMap';
+import { Profile, Header } from '@UI';
 
 @inject('chatStore')
 @observer
@@ -16,7 +16,7 @@ class Me extends BaseCom {
         status: 'profile'
     }
 
-    @observable newNickname = '';
+    @observable newNickname = this.store.nickName;
     @observable oldPass = '';
     @observable newPass = '';
     @observable newPassAgain = '';
@@ -60,7 +60,7 @@ class Me extends BaseCom {
             if (this.newPass !== this.newPassAgain) {
                 message.error('两次新密码输入不一致');
                 return;
-            } else if (await netModel.post(apiMap.get('chatVerify'), {
+            } else if (await wrapedReq.post('chatVerify', {
                 userName: this.store.userName,
                 passWord: this.oldPass
             },{}) !== 'verified') {
@@ -68,7 +68,7 @@ class Me extends BaseCom {
                 return;
             }
         }
-        const ans = await netModel.post(apiMap.get('updateUserInfo'), {changeObj: this.changeMap[key].transferObj()}, {});
+        const ans = await wrapedReq.post('updateUserInfo', {changeObj: this.changeMap[key].transferObj()}, {});
         if (ans === 'success') {
             message.success('保存成功');
             runInAction(() => {
@@ -86,7 +86,7 @@ class Me extends BaseCom {
         },
         Avatar: {
             render: () => <Avatar updateIMg = {this.updateImg}/>,
-            isHighLight: () => true,
+            isHighLight: () => this.base64Img !== '',
             transferObj: () => ({avatar: this.base64Img}),
             postCB: () => {this.store.avatar = this.base64Img}
         },
@@ -98,31 +98,29 @@ class Me extends BaseCom {
         }
     }
 
+    logOut = () => {
+        writeCookie({password: ''}, 10);
+        window.location.href='/login.html';
+    }
+
     render () {
         return (
             <div className={s.mewrapper}>
                 {this.state.status === 'profile'
                 ? <React.Fragment>
-                    <div onClick={() => {console.log(toJS(this.store))}} className={s.meavatarbar}>
-                        <div className={s.meavatar} style={{ backgroundImage: getBgUrl(this.getAvatar())}}>
-                        </div>
-                        <div className={s.wrapper}>
-                            <div className={s.nickname}>{this.store.nickName || this.store.userName}</div>
-                            <div className={s.uid}>chatID: {this.store.userName}</div>
-                        </div>
-                    </div>
+                    <Header noBack={true} midContent={'Me'} />
+                    <Profile info={this.getMyInfoObj()}/>
                     {['Nickname', 'Avatar', 'Password'].map((item, index) => {
                         return (
                             <div key={index} className={combineCss(s.changeItem, s['ch' + item])} onClick={this.clickChange.bind(this, item)}>{item}</div>
                         )
                     })}
+                    <div className={combineCss(s.changeItem, s.logOut)} onClick={this.logOut}>Log Out</div>
                 </React.Fragment>
                 : <div className={s.edit}>
-                    <div className={s.topBar}>
-                        <div className={s.back} onClick={this.clickChange.bind(this, 'profile')}>{'<'}</div>
-                        <div className={s.midContent}>{this.state.status}</div>
+                    <Header back={this.clickChange.bind(this, 'profile')} midContent={this.state.status}>
                         <div onClick={this.save.bind(this, this.state.status)} className={combineCss(s.save, this.changeMap[this.state.status].isHighLight() ? s.saveHighlight : '')}>save</div>
-                    </div>
+                    </Header>
                     {this.changeMap[this.state.status].render()}
                 </div>}
             </div>

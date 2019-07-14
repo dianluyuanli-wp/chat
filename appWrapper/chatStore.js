@@ -1,11 +1,11 @@
 import { observable } from 'mobx';
-import { PAGE_NAME } from '@constants';
+import { FRIENDS } from '@constants';
 
 class ChatStore {
     @observable message = [];
     @observable userName = '1';
     @observable toUserId = '2';
-    @observable pageKey = PAGE_NAME.FRIENDS;
+    @observable pageKey = FRIENDS;
     @observable searchList = [];
     @observable nickName = '';
     @observable avatar = '';

@@ -4,9 +4,9 @@ import Wrapper from './wrapper';
 import { netModel, parseCookie } from 'xiaohuli-package';
 import apiMap from '@apiMap';
 import { lookbehindAssertion } from '@tools';
+const {userName, password} = parseCookie();
 
 const loginVerify = async (currentRoute) => {
-    const {userName, password} = parseCookie();
     const res = await netModel.post(apiMap.get('chatVerify'), {
         userName: userName,
         passWord: password
@@ -22,10 +22,10 @@ const renderFunction = async() => {
     //  后向断言自实现
     const currentRoute = lookbehindAssertion(ans, '/');
     loginVerify(currentRoute);
-    const userInfo = await netModel.get(apiMap.get('userInfo'),{}, {});
+    const userInfo = await netModel.get(apiMap.get('userInfo'),{userName}, {});
     //  不是主页的话没必要请求聊天记录
     if (currentRoute === 'home') {
-        let message = await netModel.get(apiMap.get('getAllMessage'), {}, {});
+        let message = await netModel.get(apiMap.get('getAllMessage'), {userName}, {});
         userInfo.message = message;
     }
     ReactDom.render((
