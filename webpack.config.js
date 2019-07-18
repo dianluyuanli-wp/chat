@@ -1,13 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-//const CleanWebpackPlugin = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-//const uglify_es = require('uglify-es');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //webpack4 替代extract-text-webpack-plugin，将css单独提取打包
 import { useRemoteApi } from './constants/webpackConst';
-
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname),
@@ -16,8 +12,10 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.js',
+        chunkFilename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: path.resolve(__dirname, 'dist')
+        //publicPath: path.resolve(__dirname, 'dist'),
+        publicPath: './'
     },
     optimization: {
         splitChunks: {
@@ -30,11 +28,12 @@ module.exports = {
                     chunks: 'initial',
                     priority: 10
                 },
-                commons: {
+                vendor: {
+                    name: "common",
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'commons',
-                    chunks: 'initial',
-                    minChunks: 2,
+                    chunks: "initial",
+                    minChunks: 1,   //  如果是2的话一个也抽不出来，因为好多只用了一次
+                    priority: 8 // 优先级
                 }
             },
         },
@@ -51,7 +50,13 @@ module.exports = {
         new webpack.DefinePlugin({
             'apiFromLocal': {
                 PLACE: JSON.stringify(useRemoteApi ? 'remote' : 'local'),
+                //PLACE: JSON.stringify('local'),
             },
+         }),
+         new HtmlWebpackPlugin({
+             filename: '../views/index.html',
+             template: './views/template.html',
+             inject: 'body'
          })
     ],
     module: {
@@ -63,11 +68,13 @@ module.exports = {
                     {
                         loader: 'babel-loader', 
                         query: {
+                            //"babelrc": false,
                             presets: [
                                 '@babel/react', 
                                 '@babel/preset-env'
                             ],
                             plugins: [
+                                "@babel/plugin-syntax-dynamic-import",  //  这个是为了在浏览器的时候能够实现动态加载
                                 ['import', {                //这个是为了使用antd的样式
                                     libraryName: 'antd',
                                     //libraryDirectory: 'es',
@@ -81,12 +88,14 @@ module.exports = {
                                     "useESModules": false
                                 }],
                                 //'@babel/plugin-runtime',
+                                'dynamic-import-webpack',   //  这个是为了在打包的时候能够识别异步加载的import写法
                                 "syntax-dynamic-import",    //  支持动态import，支持react-loadable
                                 //'transform-decorators-legacy', //在这两个是为了支持es7的装饰器语法，如@observe等
                                 ["@babel/plugin-proposal-decorators", { "legacy": true }],
                                 '@babel/plugin-proposal-optional-chaining',
-                                ['@babel/plugin-proposal-class-properties', { "loose": true }]
-                            ]
+                                ['@babel/plugin-proposal-class-properties', { "loose": true }],   
+                            ],
+                            comments: true
                         },
                     }
                 ]

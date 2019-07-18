@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Input, Form, Button, message } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { toJS, runInAction, observable, action } from 'mobx';
 import s from './index.css';
-import Avatar from './upload';
+//import Avatar from './upload/bundle.js';
 import { getBgUrl, combineCss, wrapedReq } from '@tools';
 import { writeCookie } from 'xiaohuli-package';
 import BaseCom from '../../baseStructure/baseCom';
 import { Profile, Header } from '@UI';
 
+const AvatarCom = lazy(() => import(/* webpackChunkName: "upload" */ './upload'));
+const Avatar = (props) => (
+    <Suspense fallback={<p>Loading...</p>}>
+        <AvatarCom {...props}/>
+    </Suspense>
+)
 @inject('chatStore')
 @observer
 class Me extends BaseCom {
