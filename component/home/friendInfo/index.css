@@ -1,0 +1,29 @@
+.mewrapper {
+    overflow: hidden;
+    height: 100%;
+    background-color: rgb(240, 239, 245);
+}
+
+.changeItem {
+    width: 100%;
+    height: .4rem;
+    line-height: .4rem;
+    font-size: .2rem;
+    padding-left: .2rem;
+    background-color: #fff;
+    border-top: 1px solid #d4d4d4;
+}
+
+.last {
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.save {
+    position: relative;
+    right: .2rem;
+    color: rgba(69, 214, 66, 0.5);
+}
+
+.saveHighlight {
+    color: rgb(69, 214, 66);
+}

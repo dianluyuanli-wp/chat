@@ -1,0 +1,34 @@
+.meavatarbar {
+    margin-top: .15rem;
+    height: .75rem;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: .15rem;
+}
+
+.meavatar {
+    width: .5rem;
+    height: .5rem;
+    border-radius: .04rem;
+    background-color: bisque;
+    background-size: 100% 100%;
+    margin-top: .125rem;
+    margin-left: .125rem;
+    display: inline-block;
+}
+
+.nickname {
+    font-size: .2rem;
+}
+
+.uid {
+    font-size: .12rem;
+}
+
+.wrapper {
+    display: inline-block;
+    margin-top: .12rem;
+    color: rgb(38, 38, 38);
+    vertical-align: top;
+    padding-left: .1rem;
+}

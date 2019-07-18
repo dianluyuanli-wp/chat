@@ -1,0 +1,59 @@
+.mewrapper {
+    overflow: hidden;
+    height: 100%;
+    background-color: rgb(240, 239, 245);
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .2rem;
+    color: #fff;
+    background-color: rgba(0,0,0, 0.8);
+    width: 3.75rem;
+    height: .5rem;
+}
+
+.back {
+    position: relative;
+    left: .2rem;
+}
+
+.save {
+    position: relative;
+    right: .2rem;
+    color: rgba(69, 214, 66, 0.5);
+}
+
+.changeItem {
+    width: 100%;
+    height: .4rem;
+    line-height: .4rem;
+    font-size: .2rem;
+    padding-left: .2rem;
+    background-color: #fff;
+    border-top: 1px solid #d4d4d4;
+}
+
+.chPassword {
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.saveHighlight {
+    color: rgb(69, 214, 66);
+}
+
+.spanAdd {
+    width: 1.3rem;
+    text-align: center;
+    display: inline-block;
+}
+
+.logOut {
+    color: red;
+    padding-left: 0;
+    margin-top: 1.2rem;
+    text-align: center;
+    border-bottom: 1px solid #d4d4d4;
+}

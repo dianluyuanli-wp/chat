@@ -1,0 +1,14 @@
+.topBar {
+    display: flex;
+    align-items: center;
+    font-size: .2rem;
+    color: #fff;
+    background-color: rgba(0,0,0, 0.8);
+    width: 3.75rem;
+    height: .5rem;
+}
+
+.back {
+    position: relative;
+    left: .2rem;
+}
