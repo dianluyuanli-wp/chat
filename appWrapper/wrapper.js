@@ -15,8 +15,8 @@ const Login = () => (
     </Suspense>
 )
 const Register = Loadable({
-    loader: import(/* webpackChunkName: 'register' */'../component/register'),
-    loading: <div>123</div>
+    loader: () => import(/* webpackChunkName: 'register' */'../component/register'),
+    loading: () => <div>123</div>
 })
 
 @observer
