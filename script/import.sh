@@ -3,7 +3,6 @@ rm -rf ./dist/*.js
 rm -rf ./dist/*.css
 git pull origin master
 cd ./../bundleChat
-rm -rf *
 git pull origin master
 cd ./../chat
 cp -r ./../bundleChat/* ./dist
