@@ -8,7 +8,7 @@ import { useRemoteApi } from './constants/webpackConst';
 module.exports = {
     context: path.resolve(__dirname),
     entry: {
-        app:['./appWrapper/index.js'],
+        app:['./appWrapper/index.js']
     },
     output: {
         filename: '[name].bundle.js',
@@ -34,7 +34,7 @@ module.exports = {
                     name: "common",
                     test: /[\\/]node_modules[\\/]/,
                     chunks: "initial",
-                    minSize: 30000,
+                    //minSize: 30000,   //  注释掉的话也不会打出来
                     minChunks: 1,   //  如果是2的话一个也抽不出来，因为好多只用了一次
                     priority: 8 // 优先级
                 }
@@ -71,7 +71,7 @@ module.exports = {
                     {
                         loader: 'babel-loader', 
                         query: {
-                            //"babelrc": false,
+                            babelrc: false,
                             presets: [
                                 '@babel/react', 
                                 '@babel/preset-env'
@@ -95,7 +95,7 @@ module.exports = {
                                 //"syntax-dynamic-import",    //  支持动态import，支持react-loadable
                                 ["@babel/plugin-proposal-decorators", { "legacy": true }],  //在这两个是为了支持es7的装饰器语法，如@observe等
                                 '@babel/plugin-proposal-optional-chaining',
-                                ['@babel/plugin-proposal-class-properties', { "loose": true }],   
+                                ['@babel/plugin-proposal-class-properties', { "loose": true }]
                             ],
                             comments: true
                         },
