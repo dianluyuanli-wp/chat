@@ -3,15 +3,17 @@ import { Input, Form, Button, message } from 'antd';
 import { inject, observer } from 'mobx-react';
 import { toJS, runInAction, observable, action } from 'mobx';
 import s from './index.css';
-//import Avatar from './upload/bundle.js';
+//import Avatar from './upload';
 import { getBgUrl, combineCss, wrapedReq } from '@tools';
 import { writeCookie } from 'xiaohuli-package';
+import Loading from '@UI/loading';
 import BaseCom from '../../baseStructure/baseCom';
+
 import { Profile, Header } from '@UI';
 
 const AvatarCom = lazy(() => import(/* webpackChunkName: "upload" */ './upload'));
 const Avatar = (props) => (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={Loading()}>
         <AvatarCom {...props}/>
     </Suspense>
 )

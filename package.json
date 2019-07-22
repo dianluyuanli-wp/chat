@@ -7,7 +7,8 @@
     "build": "node ./script/delete && babel-node ./bundle",
     "delete": "node ./script/delete",
     "build-ana": "babel-node ./bundle analyze",
-    "cBuild": "webpack --color --config webpack.pro.config.js"
+    "cBuild": "webpack --color --config webpack.pro.config.js",
+    "dBuild": "webpack --color --config webpack.config.js"
   },
   "dependencies": {
     "antd": "^3.18.1",

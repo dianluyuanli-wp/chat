@@ -19,12 +19,14 @@ module.exports = {
     },
     optimization: {
         splitChunks: {
+            minSize: 1000000,
             cacheGroups: {
                 antd: {
                     name: 'antd',
                     test: (module) => {
                         return /antd|ant-design/g.test(module.context);
                     },
+                    minSize: 30000,
                     chunks: 'initial',
                     priority: 10
                 },
@@ -32,6 +34,7 @@ module.exports = {
                     name: "common",
                     test: /[\\/]node_modules[\\/]/,
                     chunks: "initial",
+                    minSize: 30000,
                     minChunks: 1,   //  如果是2的话一个也抽不出来，因为好多只用了一次
                     priority: 8 // 优先级
                 }
@@ -89,9 +92,8 @@ module.exports = {
                                 }],
                                 //'@babel/plugin-runtime',
                                 'dynamic-import-webpack',   //  这个是为了在打包的时候能够识别异步加载的import写法
-                                "syntax-dynamic-import",    //  支持动态import，支持react-loadable
-                                //'transform-decorators-legacy', //在这两个是为了支持es7的装饰器语法，如@observe等
-                                ["@babel/plugin-proposal-decorators", { "legacy": true }],
+                                //"syntax-dynamic-import",    //  支持动态import，支持react-loadable
+                                ["@babel/plugin-proposal-decorators", { "legacy": true }],  //在这两个是为了支持es7的装饰器语法，如@observe等
                                 '@babel/plugin-proposal-optional-chaining',
                                 ['@babel/plugin-proposal-class-properties', { "loose": true }],   
                             ],

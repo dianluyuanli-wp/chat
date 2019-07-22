@@ -1,23 +1,25 @@
 import React, { lazy, Suspense } from 'react';
 import { Provider, observer } from 'mobx-react';
 import Entry from '../component/home';
-//import Login from '../component/login';
-//import Register from '../component/register';
+import Login from '../component/login';
+import Register from '../component/register';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import chatStore from './chatStore';
-import Loadable from 'react-loadable';  //  这个支持后端渲染
 
-const LoginCom = lazy(() => import(/* webpackChunkName: 'login' */ '../component/login'));
+// import Loading from '@UI/loading';
+// import Loadable from 'react-loadable';  //  这个支持后端渲染
 
-const Login = () => (
-    <Suspense fallback={<p>Loading...</p>}>
-        <LoginCom />
-    </Suspense>
-)
-const Register = Loadable({
-    loader: () => import(/* webpackChunkName: 'register' */'../component/register'),
-    loading: () => <div>123</div>
-})
+// const LoginCom = lazy(() => import(/* webpackChunkName: 'login' */ '../component/login'));
+
+// const Login = () => (
+//     <Suspense fallback={Loading()}>
+//         <LoginCom />
+//     </Suspense>
+// )
+// const Register = Loadable({
+//     loader: () => import(/* webpackChunkName: 'register' */'../component/register'),
+//     loading: Loading
+// })
 
 @observer
 class dataWrapper extends React.Component {
