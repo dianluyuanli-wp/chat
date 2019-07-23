@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "babel-node ./bin/www",
-    "build": "node ./script/delete && babel-node ./bundle",
+    "build": "babel-node ./bundle",
     "delete": "node ./script/delete",
     "build-ana": "babel-node ./bundle analyze",
     "cBuild": "webpack --color --config webpack.pro.config.js",

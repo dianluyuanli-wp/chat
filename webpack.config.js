@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const deleteOldFile = require('./tools/webpackPlugin/test');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //webpack4 替代extract-text-webpack-plugin，将css单独提取打包
 import { useRemoteApi } from './constants/webpackConst';
 
@@ -60,6 +61,10 @@ module.exports = {
              filename: '../views/index.html',
              template: './views/template.html',
              inject: 'body'
+         }),
+         new deleteOldFile({
+             exclude: /avatar/,
+             path: './dist'
          })
     ],
     module: {
