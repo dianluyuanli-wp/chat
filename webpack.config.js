@@ -65,7 +65,13 @@ module.exports = {
          new deleteOldFile({
              exclude: /avatar/,
              path: './dist'
-         })
+         }),
+        //  new webpack.NamedChunksPlugin(chunk => {
+        //      if (chunk.name) {
+        //          return chunk.name
+        //      }
+        //      return 'upLoad'
+        //  })
     ],
     module: {
         rules: [

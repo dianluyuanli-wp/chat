@@ -37,6 +37,7 @@ function HelloWorldPlugin(options) {
 HelloWorldPlugin.prototype.apply = function(compiler) {
   //此处利用了 Compiler 提供的 done 钩子函数，作用前面已经说过
   compiler.hooks.entryOption.tap({name: 'HelloWorldPlugin'}, () => {
+      console.log('~删除上次打包文件~')
       action(this.options);
   });
 };
