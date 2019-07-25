@@ -19,7 +19,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'dist')));
+//  设置静态资源的位置，同时设置过期时间
+app.use(express.static(path.join(__dirname, 'dist'), {
+  maxAge: String(24*60*60*1000*60)
+}));
 
 app.use('*.html', indexRouter);
 

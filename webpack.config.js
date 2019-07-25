@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const deleteOldFile = require('./tools/webpackPlugin/test');
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //webpack4 替代extract-text-webpack-plugin，将css单独提取打包
 import { useRemoteApi } from './constants/webpackConst';
 
@@ -13,7 +14,7 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.js',
-        chunkFilename: '[name].js',
+        chunkFilename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist'),
         //publicPath: path.resolve(__dirname, 'dist'),
         publicPath: './'
@@ -35,7 +36,7 @@ module.exports = {
                     name: "common",
                     test: /[\\/]node_modules[\\/]/,
                     chunks: "initial",
-                    //minSize: 30000,   //  注释掉的话也不会打出来
+                    minSize: 30000,   //  注释掉的话也不会打出来
                     minChunks: 1,   //  如果是2的话一个也抽不出来，因为好多只用了一次
                     priority: 8 // 优先级
                 }
@@ -48,8 +49,8 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({      //对css进行打包，webpack4推荐语法
-            filename: "[name].css",
-            chunkFilename: "[name].css"
+            filename: "[name].[contenthash].css",
+            chunkFilename: "[name].[contenthash].css"
         }),
         new webpack.DefinePlugin({
             'apiFromLocal': {
@@ -61,6 +62,9 @@ module.exports = {
              filename: '../views/index.html',
              template: './views/template.html',
              inject: 'body'
+         }),
+         new ScriptExtHtmlWebpackPlugin({
+            inline: /app.bundle.js/
          }),
          new deleteOldFile({
              exclude: /avatar/,
