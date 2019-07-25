@@ -1,4 +1,5 @@
 import s from './index.css';
+import React from 'react';
 import { getBgUrl, combineCss } from '@tools';
 
 function profile(props) {

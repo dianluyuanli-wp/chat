@@ -1,6 +1,7 @@
 import { Upload, Icon, message, Button } from 'antd';
 import { inject, observer } from 'mobx-react';
 import s from './upload.css';
+import React from 'react';
 import Cropper from 'cropperjs';
 import $ from 'jquery';
 import 'cropperjs/dist/cropper.css';
