@@ -3,7 +3,7 @@ function callNative(data) {
     if (!window.WebViewJavascriptBridge) return;
     window.WebViewJavascriptBridge.callHandler(
         'submitFromWeb'
-        , str1
+        , data
         , function(responseData) {
 
         }
