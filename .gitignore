@@ -3,4 +3,3 @@ node_modules
 dist
 .idea
 testScript
-views/index.html
