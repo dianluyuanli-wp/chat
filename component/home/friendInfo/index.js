@@ -8,6 +8,8 @@ import BaseCom from '../../baseStructure/baseCom';
 import { Profile, Header } from '@UI';
 import { CHAT, FRIENDS } from '@constants';
 
+import { init, callNative} from '@tools/jsBridge';
+
 @inject('chatStore')
 @observer
 class FriendInfo extends BaseCom {
@@ -60,6 +62,10 @@ class FriendInfo extends BaseCom {
         this.showDialog = false;
     }
 
+    changeNativeNum = (event) => {
+        callNative(event.target.value);
+    }
+
     render () {
         const friendInfo = this.getFriendInfo(this.store.toUserId);
         const { avatar, nickName, userName} = friendInfo;
@@ -88,6 +94,7 @@ class FriendInfo extends BaseCom {
                     </Header>
                     <Input defaultValue={this.getFriendInfo(this.store.toUserId).nickName} onChange={this.changeTransmisValue.bind(this, 'newFriendNickName')} style={{ marginTop: '.2rem' }}/>
                 </div>}
+                <Input onChange={this.changeNativeNum}></Input>
             </div>
         );
     }

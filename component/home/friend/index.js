@@ -7,7 +7,7 @@ import BaseCom from '../../baseStructure/baseCom';
 import { getBothOwner, isFirst, getBgUrl } from '@tools';
 import { CHAT } from '@constants';
 import { Header } from '@UI';
-
+//import Test from './testCom';
 @inject('chatStore')
 @observer
 class Friend extends BaseCom {

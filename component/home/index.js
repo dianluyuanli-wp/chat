@@ -10,6 +10,7 @@ import Add from './add';
 import Me from './me';
 import Friend from './friend';
 import { userInList } from '@tools';
+import { init, callNative} from '@tools/jsBridge';
 import FriendInfo from './friendInfo';
 import { FRIENDS, ADD, ME, CHAT, PAGE_NAME, NOT_YOUR_FRIEND, NEW_FRIEND_REQ, REQ_AGREE } from '@constants';
 
@@ -17,6 +18,7 @@ import { FRIENDS, ADD, ME, CHAT, PAGE_NAME, NOT_YOUR_FRIEND, NEW_FRIEND_REQ, REQ
 @observer
 class HomePage extends BaseCom {
     componentDidMount() {
+        init();
         //  全局绑个用户名
         window.chatUserName = this.store.userName;
         let protocal = window.location.protocol;
