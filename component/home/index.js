@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Input, Form, Button, message as Message } from 'antd';
 import io from 'socket.io-client';
 import { inject, observer } from 'mobx-react';
-import { toJS, runInAction, action } from 'mobx';
+import { toJS, runInAction, action, autorun } from 'mobx';
 import './index.scss';
 import BaseCom from '../baseStructure/baseCom';
 import Chat from './chats';
@@ -19,6 +19,10 @@ import { FRIENDS, ADD, ME, CHAT, PAGE_NAME, NOT_YOUR_FRIEND, NEW_FRIEND_REQ, REQ
 class HomePage extends BaseCom {
     componentDidMount() {
         init();
+        autorun(() => {
+            const value = this.store.allPopUp;
+            callNative(value);
+        })
         //  全局绑个用户名
         window.chatUserName = this.store.userName;
         let protocal = window.location.protocol;

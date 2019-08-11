@@ -17,7 +17,8 @@ class Friend extends BaseCom {
         this.store.toUserId = item;
     }
     getFriend = () => {
-        return this.store.friendsList.map((item, index) => {
+        let popUpMark = 0;
+        const list = this.store.friendsList.map((item, index) => {
             const messageList = this.store.message.filter(target => target.bothOwner.includes(item.userName));
             let message = '';
             let popUp = 0;
@@ -27,6 +28,7 @@ class Friend extends BaseCom {
                 popUp = isFirst(bothOwner, this.store.userName) ? (user2_flag - user1_flag) : (user1_flag - user2_flag);
                 popUp = popUp > 99 ? '99+' : popUp;
                 message = chatHistory[chatHistory.length - 1].content;
+                popUpMark += popUp;
             }
             return (
                 <div className={'friend-item'} key={index} onClick={this.entryTalk.bind(this, item.userName)}>
@@ -40,6 +42,10 @@ class Friend extends BaseCom {
                 </div>
             )
         })
+        runInAction(() => {
+            this.store.allPopUp = popUpMark; 
+        })
+        return list;
     }
     render() {
         return (

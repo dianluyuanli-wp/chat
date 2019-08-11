@@ -12,6 +12,7 @@ class ChatStore {
     @observable friendsList = [];
     @observable friendRequest = [];
     @observable socketIoObj = {};
+    @observable allPopUp = 0;
     constructor(opts) {
         this.message = opts?.message || [];
         this.userName = opts?.userName || '';
