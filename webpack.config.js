@@ -59,7 +59,7 @@ module.exports = {
             },
          }),
          new HtmlWebpackPlugin({
-             filename: '../views/index.html',
+             filename: '../dist/index.html',
              template: './views/template.html',
              inject: 'body'
          }),
