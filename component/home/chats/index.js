@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { toJS, runInAction, action, autorun, observable } from 'mobx';
 import './index.scss';
 import BaseCom from '../../baseStructure/baseCom';
-import { getBothOwner, isFirst, getBgUrl, wrapedReq } from '@tools';
+import { getBgUrl, wrapedReq, getIimeStringForChat } from '@tools';
 import Loading from '@UI/loading';
 import { Header } from '@UI';
 import { FRIENDS, FRIENDINFO } from '@constants';
@@ -89,14 +89,18 @@ class HomePage extends BaseCom {
         } else {
             renderList = [];
         }
-        const returnList = renderList.reverse().map((item, index) => {
+        const returnList = renderList.reverse().map((item, index, tArray) => {
             const isOwner = this.store.userName === item.owner;
             const avatar = <div className={'user-avatar'} style={{backgroundImage: getBgUrl(this.getAvatar(item.owner)) }} 
                 />;
             const content = <div className={'user-say'}>{item.content}</div>;
+            const showTimeOrNot = tArray[index + 1] ? item.timeStamp - tArray[index + 1].timeStamp > 10 * 60 * 1000 : true;
             return (
-                <div key={index} className={'word-box ' + (isOwner ? 'right-box' : 'left-box')}>
-                    {isOwner ? content : avatar}{isOwner ? avatar : content}
+                <div key={index}>
+                    {showTimeOrNot && <div className='chat-time-wrapper'><div className={'chat-time-tag'}>{getIimeStringForChat(item.timeStamp)}</div></div>}
+                    <div className={'word-box ' + (isOwner ? 'right-box' : 'left-box')}>
+                        {isOwner ? content : avatar}{isOwner ? avatar : content}
+                    </div>
                 </div>
             )
         });

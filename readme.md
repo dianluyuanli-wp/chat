@@ -1,4 +1,4 @@
-#基于react mobx soceket.io的IM工具
+# 基于react mobx soceket.io的IM工具
 
 安装依赖 npm i
 

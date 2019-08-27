@@ -23,6 +23,30 @@ export function getBgUrl(url) {
     return 'url(' + url + ')';
 }
 
+const getYearMounthDate = function(timeStamp) {
+    const DateObj = new Date(timeStamp);
+    return DateObj.getFullYear() + '/' + (DateObj.getMonth() + 1) + '/' + DateObj.getDate();
+}
+
+const currentTimeStamp = new Date().getTime();
+const currentDateStamp = new Date(getYearMounthDate(currentTimeStamp)).getTime();
+const dayMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+const oneDayMillSec = 24 * 3600 * 1000;
+export function getIimeStringForChat(timeStamp) {
+    const timeGap = currentDateStamp - timeStamp;
+    const res = new Date(timeStamp).toString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
+    let prefix = '';
+    if (timeGap < 0) {
+    } else if (timeGap < oneDayMillSec) {
+        prefix = 'Yesterday   '
+    } else {
+        const dayGap = timeGap / oneDayMillSec; 
+        prefix = (dayGap < 6 ? dayMap[new Date(currentDateStamp - dayGap * oneDayMillSec).getDay()] : getYearMounthDate(timeStamp)) + '   ';
+    }
+    return prefix + res;
+}
+
 export const wrapedReq = {
     get: (string, props, opt) => netModel.get(apiMap.get(string), Object.assign(props, { userName: window.chatUserName}, opt)),
     post: (string, props, opt) => netModel.post(apiMap.get(string), Object.assign(props, { userName: window.chatUserName}, opt)),

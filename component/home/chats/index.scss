@@ -119,3 +119,20 @@
     height: 1rem;
     color: transparent;
 }
+
+.chat-time-tag {
+    //margin: 0 auto;
+    background-color: rgb(218, 218,218);
+    color: #fff;
+    border-radius: .02rem;
+    font-size: .1rem;
+    display: inline-block;
+    padding-left: .03rem;
+    padding-right: .03rem;
+}
+
+.chat-time-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
