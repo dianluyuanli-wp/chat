@@ -5,6 +5,7 @@
   "scripts": {
     "start": "babel-node ./bin/www",
     "build": "babel-node ./bundle",
+    "dll-build": "webpack --color --config webpack.dll.config.js -p",
     "delete": "node ./script/delete",
     "build-ana": "babel-node ./bundle analyze",
     "cBuild": "webpack --color --config webpack.pro.config.js",

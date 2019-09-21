@@ -2,7 +2,7 @@
 
 安装依赖 npm i
 
-项目启动（启用远程接口） npm run start
+项目启动（启用本地接口） npm run start
 默认使用本地的接口
 
 项目启动（启动watch，文件有变化自动更新） npm run start wat
