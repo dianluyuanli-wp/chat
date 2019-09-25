@@ -58,7 +58,8 @@ module.exports = {
                 PLACE: JSON.stringify(useRemoteApi ? 'remote' : 'local'),
                 //PLACE: JSON.stringify('local'),
             },
-         }),
+        }),
+        //  动态链接库
         new webpack.DllReferencePlugin({
             context: __dirname,
             manifest: require('./dist/vendors-manifest.json')
@@ -68,16 +69,19 @@ module.exports = {
         new webpack.ContextReplacementPlugin(
             /moment[/\\]locale$/,
             /zh-cn/,
-        ),        
+        ),
+        // 自动注入打包代码        
         new HtmlWebpackPlugin({
             filename: '../dist/index.html',
             template: './views/template.html',
             inject: 'body',
             vendor: './' + manifest.name + '.js' //manifest就是dll生成的json
         }),
+        // 处理行内代码
         new ScriptExtHtmlWebpackPlugin({
         inline: /app.bundle.js/
         }),
+        // 删掉老文件，手写插件
         new deleteOldFile({
             exclude: /avatar|vendors/,
             path: './dist'
