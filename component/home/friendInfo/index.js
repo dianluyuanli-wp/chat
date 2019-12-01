@@ -34,7 +34,7 @@ class FriendInfo extends BaseCom {
             return ;
         }
         const ans = await wrapedReq.post('updateUserInfo', {changeObj: { fridendNickName: { newNickName: this.newFriendNickName, friend: this.store.toUserId }}}, {});
-        if (ans === 'success') {
+        if (ans.status === 'success') {
             message.success('保存成功');
             runInAction(() => {
                 this.store.friendsList.filter(item => item.userName === this.store.toUserId)[0].nickName = this.newFriendNickName;

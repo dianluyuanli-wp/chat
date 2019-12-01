@@ -77,7 +77,7 @@ class Me extends BaseCom {
             }
         }
         const ans = await wrapedReq.post('updateUserInfo', {changeObj: this.changeMap[key].transferObj()}, {});
-        if (ans === 'success') {
+        if (ans.status === 'success') {
             message.success('保存成功');
             runInAction(() => {
                 this.changeMap[key].postCB();
