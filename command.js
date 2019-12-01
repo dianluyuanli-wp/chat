@@ -17,7 +17,8 @@ contents.forEach(item => {
 stdin.resume();
 stdin.on('data', async function(data) {
     //  输入获得的是buffer 对象，不能直接使用，否则会有问题， 貌似window下和linux下的格式不对应，linux下应该为slice(0,-1)
-    const enterString = data.toString().slice(0,-1);
+    //  本质原因是windows下命令行的enter键解析成'\r\n'，而linux下解析成'\n'
+    const enterString = data.toString().replace('\n', '').replace('\r', '');
     if (!/[0-9]+$/.test(enterString)) {
         console.log(rWord('Input Words is not Number!'));
         return ;
